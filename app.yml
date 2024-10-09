@@ -1,0 +1,33 @@
+platform:
+  runtime: nodejs18.x
+  timeout: 30
+  memory: 512
+
+
+dev:
+  domainConfig:
+    hostedZoneId: Z02528861CW1OQIHK3MGL
+    apiDomain: dev.api.defensealertdevice.com
+    apiCert: 5f0dafb3-98eb-4efc-ba37-d23746ad2e6d
+  db:
+    user: tiger
+    credentials: rds!db-3a29c04a-142a-4e81-b7cb-3fa09d55151f
+    settings: /dev/tigerlight/db-settings
+  assets:
+    bucket: dev.assets.defensealertdevice.com
+prod:
+  domainConfig:
+    hostedZoneId: Z02528861CW1OQIHK3MGL
+    apiDomain: api.defensealertdevice.com
+    apiCert: b559fd0e-f581-4d0e-af8e-4dbcee548f6b
+  db:
+    user: tigerlightprod
+    credentials: /prod/tigerlight/db-credentials
+    settings: /prod/tigerlight/db-settings
+  assets:
+    bucket: assets.defensealertdevice.com
+
+sourceRepo:
+  owner: enkompass
+  name: com.tigerlight.api
+  branch: main

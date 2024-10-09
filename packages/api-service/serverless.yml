@@ -1,0 +1,77 @@
+service: tigerlight-api-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-iam-roles-per-function
+  - serverless-bundle
+  # - serverless-api-gateway-throttling
+
+provider:
+  name: aws
+  runtime: ${self:custom.app.platform.runtime}
+  stage: ${opt:stage, 'local'}
+  region: ${opt:region, 'us-west-2'}
+  timeout: ${self:custom.app.platform.timeout}
+  memorySize: ${self:custom.app.platform.memory}
+  logs:
+    restApi: true
+  logRetentionInDays: 90
+  lambdaHashingVersion: 20201221
+  tracing:
+    apiGateway: true
+    lambda: true
+  environment:
+    DB_CREDENTIALS_NAME: ${self:custom.app.${self:provider.stage}.db.credentials}
+    DB_SETTINGS_NAME: ${self:custom.app.${self:provider.stage}.db.settings}
+    STAGE: ${opt:stage, 'local'}
+    NODE_ENV: production
+    ASSETS_BUCKET_NAME: ${self:custom.app.${self:provider.stage}.assets.bucket}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource:
+        - '*'
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource:
+        - !Sub "arn:aws:s3:::${self:custom.app.${self:provider.stage}.assets.bucket}/*"
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        - arn:aws:ssm:${self:provider.region}:${aws:accountId}:parameter${self:custom.app.${self:provider.stage}.db.credentials}
+        - arn:aws:ssm:${self:provider.region}:${aws:accountId}:parameter${self:custom.app.${self:provider.stage}.db.settings}
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - arn:aws:secretsmanager:${self:provider.region}:${aws:accountId}:secret:${self:custom.app.${self:provider.stage}.db.credentials}-*
+        - arn:aws:secretsmanager:${self:provider.region}:${aws:accountId}:secret:${self:custom.app.${self:provider.stage}.db.settings}-*
+    - Effect: Allow
+      Action:
+        - rds-db:connect
+      Resource:
+        - 'arn:aws:rds-db:${self:provider.region}:${aws:accountId}:dbuser:${self:custom.app.${self:provider.stage}.db.user}*/*'
+
+custom:
+  app: ${file(../../app.yml)}
+  domainConfig: ${self:custom.app.${self:provider.stage}.domainConfig}
+  apiDomainName: ${self:custom.domainConfig.apiDomain}
+  # The HostedZoneId for CloudFront distributions is always this value.
+  # See http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+  # AND http://docs.aws.amazon.com/general/latest/gr/rande.html
+  cloudFrontHostedZoneId: Z2FDTNDATAQYW2
+  hostedZoneId: ${self:custom.domainConfig.hostedZoneId}
+  apiCert: ${self:custom.domainConfig.apiCert}
+  bundle:
+    esbuild: true
+    linting: false
+    prune:
+    automatic: true
+    number: 3
+  
+functions: ${file(./sls-functions.yml)}

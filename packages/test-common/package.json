@@ -1,0 +1,26 @@
+{
+  "name": "test-common",
+  "version": "1.0.0",
+  "description": "Common utilities for integration and E2E tests",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": "./index.js",
+  "author": "Harshit Laddha <hladdha@enkompass.net>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enkompass/com.tigerlight.api"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "chance": "^1.1.8",
+    "tap": "^16.2.0"
+  },
+  "dependencies": {
+    "mailosaur": "^8.4.0",
+    "random-words": "^1.1.2"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

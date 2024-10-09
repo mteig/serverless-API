@@ -1,0 +1,7 @@
+export const CONSTANTS = {
+  DB_CREDENTIALS_NAME: process.env.DB_CREDENTIALS_NAME,
+  DB_SETTINGS_NAME: process.env.DB_SETTINGS_NAME,
+  STAGE: process.env.STAGE,
+  NODE_ENV: process.env.NODE_ENV,
+  ASSETS_BUCKET_NAME: process.env.ASSETS_BUCKET_NAME,
+};

@@ -1,0 +1,26 @@
+import { log } from './log.js';
+
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+};
+
+export async function createResponse(promise, statusCode) {
+  try {
+    const result = await promise;
+    log.info({ result }, 'Result received');
+
+    return {
+      statusCode: statusCode || result.statusCode || 200,
+      body: JSON.stringify(result || {}),
+      headers,
+    };
+  } catch (error) {
+    log.error({ error }, 'Request implementation failed');
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ ok: false }),
+      headers,
+    };
+  }
+}

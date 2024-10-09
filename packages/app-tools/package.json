@@ -1,0 +1,30 @@
+{
+  "name": "app-tools",
+  "version": "1.0.0",
+  "description": "Utilities for services",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": "./index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enkompass/com.tigerlight.api"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-cloudwatch-events": "^3.118.1",
+    "@aws-sdk/client-secrets-manager": "^3.118.1",
+    "@aws-sdk/client-sqs": "^3.665.0",
+    "@aws-sdk/client-ssm": "^3.118.1",
+    "aws-sdk-client-mock": "^2.0.0-beta.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "joi": "^17.13.3",
+    "lodash": "^4.17.21",
+    "sequelize": "^6.37.3"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

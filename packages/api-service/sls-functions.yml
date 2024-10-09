@@ -1,0 +1,7 @@
+health:
+  handler: src/controllers/health.handler
+  events:
+    - http:
+        path: /health
+        method: get
+        cors: true

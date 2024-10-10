@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "sequelize": "^6.37.3"
   },

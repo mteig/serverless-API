@@ -7,7 +7,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import mime from 'mime';
 import path from 'node:path';
 import fs from 'node:fs';
-import { CONSTANTS } from '../utils/constants.js';
+import CONSTANTS from '../utils/constants.js';
 
 const s3Client = new S3Client({ region: process.env.AWS_REGION });
 

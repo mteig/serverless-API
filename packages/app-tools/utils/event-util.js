@@ -1,5 +1,6 @@
 import get from 'lodash/get.js';
 import bourne from '@hapi/bourne'; // Used instead of JSON.parse to protect against protype poisoning
+import crypto from 'node:crypto';
 
 import { log } from './log.js';
 
@@ -32,4 +33,8 @@ export function processEvent(event) {
     user,
     headers,
   };
+}
+
+export function getMD5Hash(str) {
+  return crypto.createHash('md5').update(str).digest('hex');
 }

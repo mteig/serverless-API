@@ -5,3 +5,12 @@ health:
         path: /health
         method: get
         cors: true
+
+tiger-servlet:
+  handler: src/controllers/tiger-servlet.handler
+  events:
+    - http:
+        path: /TigerServlet
+        method: get
+        cors: true
+

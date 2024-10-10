@@ -6,6 +6,7 @@ export * from './utils/middy-util.js';
 export * from './utils/response.js';
 export * from './service-info.js';
 export * from './db/database-manager.js';
-export * from './utils/constants.js';
+export * from './utils/jwt-utils.js';
+export { default as CONSTANTS } from './utils/constants.js';
 export { default as RepositoryFactory } from './db/repositories/index.js';
 export { default as ServiceFactory } from './services/index.js';

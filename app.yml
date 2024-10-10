@@ -5,6 +5,9 @@ platform:
 
 
 dev:
+  tokenConfig:
+    accessTokenSecret: devAccessTokenSecret
+    refreshTokenSecret: devRefreshTokenSecret
   domainConfig:
     hostedZoneId: Z02528861CW1OQIHK3MGL
     apiDomain: dev.api.defensealertdevice.com
@@ -16,6 +19,9 @@ dev:
   assets:
     bucket: dev.assets.defensealertdevice.com
 prod:
+  tokenConfig:
+    accessTokenSecret: prodAccessTokenSecret
+    refreshTokenSecret: prodRefreshTokenSecret
   domainConfig:
     hostedZoneId: Z02528861CW1OQIHK3MGL
     apiDomain: api.defensealertdevice.com

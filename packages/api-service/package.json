@@ -44,6 +44,8 @@
         "app-tools": "*",
         "aws-embedded-metrics": "^2.0.5",
         "joi": "^17.13.3",
+        "jsonwebtoken": "^9.0.2",
+        "mysql2": "^3.11.3",
         "uuid": "^8.3.2"
     },
     "nyc": {

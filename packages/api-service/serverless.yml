@@ -27,6 +27,8 @@ provider:
     STAGE: ${opt:stage, 'local'}
     NODE_ENV: production
     ASSETS_BUCKET_NAME: ${self:custom.app.${self:provider.stage}.assets.bucket}
+    JWT_SECRET_KEY: ${self:custom.app.${self:provider.stage}.tokenConfig.accessTokenSecret}
+    JWT_REFRESH_SECRET_KEY: ${self:custom.app.${self:provider.stage}.tokenConfig.refreshTokenSecret}
   iamRoleStatements:
     - Effect: Allow
       Action:

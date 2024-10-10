@@ -3,8 +3,16 @@ import {
   GetSecretValueCommand,
 } from '@aws-sdk/client-secrets-manager';
 import { Sequelize } from 'sequelize';
+import mysql2 from 'mysql2';
 import { log } from '../utils/log.js';
-import { CONSTANTS } from '../utils/constants.js';
+import CONSTANTS from '../utils/constants.js';
+import Alerts from './models/alerts.js';
+import Contacts from './models/contacts.js';
+import Logs from './models/logs.js';
+import Messages from './models/messages.js';
+import UserPins from './models/user-pins.js';
+import Users from './models/users.js';
+import RefreshTokens from './models/refresh-tokens.js';
 
 const secretsManager = new SecretsManagerClient({
   region: process.env.AWS_REGION,
@@ -23,6 +31,7 @@ async function initializeDbConnection() {
       sequelize = new Sequelize(database, username, password, {
         host,
         dialect,
+        dialectModule: mysql2,
         dialectOptions: {
           ssl: {
             require: true,
@@ -31,7 +40,15 @@ async function initializeDbConnection() {
         },
       });
 
-      models = {};
+      models = {
+        Alerts: Alerts(sequelize, Sequelize),
+        Contacts: Contacts(sequelize, Sequelize),
+        Logs: Logs(sequelize, Sequelize),
+        Messages: Messages(sequelize, Sequelize),
+        UserPins: UserPins(sequelize, Sequelize),
+        Users: Users(sequelize, Sequelize),
+        RefreshTokens: RefreshTokens(sequelize, Sequelize),
+      };
 
       // Set up associations
       for (const modelName of Object.keys(models)) {

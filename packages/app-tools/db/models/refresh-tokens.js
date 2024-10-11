@@ -17,6 +17,10 @@ const RefreshTokens = (sequelize, Sequelize) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      expires: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       enabled: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

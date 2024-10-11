@@ -3,7 +3,7 @@ const Messages = (sequelize, Sequelize) => {
   return sequelize.define(
     'Messages',
     {
-      unique_id: {
+      uniqueid: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,

@@ -18,6 +18,8 @@ dev:
     settings: /dev/tigerlight/db-settings
   assets:
     bucket: dev.assets.defensealertdevice.com
+  emailConfig:
+    fromAddress: info@tigerlight.net
 prod:
   tokenConfig:
     accessTokenSecret: prodAccessTokenSecret
@@ -32,6 +34,8 @@ prod:
     settings: /prod/tigerlight/db-settings
   assets:
     bucket: assets.defensealertdevice.com
+  emailConfig:
+    fromAddress: info@tigerlight.net
 
 sourceRepo:
   owner: enkompass

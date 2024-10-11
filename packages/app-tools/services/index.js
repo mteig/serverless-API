@@ -1,5 +1,6 @@
 import S3Service from './s3-service.js';
 import SQSService from './sqs-service.js';
+import SESService from './ses-service.js';
 
 class ServiceFactory {
   getS3Service(config, request) {
@@ -8,6 +9,10 @@ class ServiceFactory {
 
   getSQSService() {
     return new SQSService();
+  }
+
+  getSESService() {
+    return new SESService();
   }
 }
 

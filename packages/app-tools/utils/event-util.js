@@ -38,3 +38,22 @@ export function processEvent(event) {
 export function getMD5Hash(str) {
   return crypto.createHash('md5').update(str).digest('hex');
 }
+
+export function generateRandomPassword(length = 8) {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let password = '';
+
+  // Use crypto to ensure secure random generation
+  for (let i = 0; i < length - 3; i += 1) {
+    const randomIndex = crypto.randomInt(0, charactersLength);
+    password += characters[randomIndex];
+  }
+  password += '@';
+  for (let i = length - 2; i < length; i += 1) {
+    const randomIndex = crypto.randomInt(0, charactersLength);
+    password += characters[randomIndex];
+  }
+  return password;
+}

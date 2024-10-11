@@ -7,6 +7,7 @@ import {
 } from 'app-tools';
 import login from './commands/login.js';
 import refreshToken from './commands/refresh-token.js';
+import forgotPassword from './commands/forgot-password.js';
 
 const innerHandler = async (event, context) => {
   const { queryStringParameters, headers } = processEvent(event);
@@ -16,7 +17,7 @@ const innerHandler = async (event, context) => {
     result.message = 'Command is required';
     return createResponse(result);
   }
-  const unauthRoutes = ['login', 'refresh-token'];
+  const unauthRoutes = ['Login', 'RefreshToken', 'ForgotPassword'];
   if (!unauthRoutes.includes(command)) {
     log.info({ headers }, 'command::headers::tiger-servlet');
     if (!headers.Authorization) {
@@ -34,12 +35,16 @@ const innerHandler = async (event, context) => {
   }
   try {
     switch (command) {
-      case 'login': {
+      case 'Login': {
         result = await login(event, context);
         break;
       }
-      case 'refresh-token': {
+      case 'RefreshToken': {
         result = await refreshToken(event, context);
+        break;
+      }
+      case 'ForgotPassword': {
+        result = await forgotPassword(event, context);
         break;
       }
       default: {

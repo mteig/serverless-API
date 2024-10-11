@@ -21,9 +21,11 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.669.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.46",
     "sequelize": "^6.37.3"
   },
   "license": "UNLICENSED",

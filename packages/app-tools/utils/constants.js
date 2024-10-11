@@ -6,4 +6,6 @@ export default {
   ASSETS_BUCKET_NAME: process.env.ASSETS_BUCKET_NAME,
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   JWT_REFRESH_SECRET_KEY: process.env.JWT_REFRESH_SECRET_KEY,
+  REGION: process.env.REGION,
+  EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
 };

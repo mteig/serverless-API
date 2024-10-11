@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
+import moment from 'moment';
 import CONSTANTS from './constants.js';
 import { log } from './log.js';
 import { dbManager, dbReady } from '../db/database-manager.js';
 
 const SECRET_KEY = CONSTANTS.JWT_SECRET_KEY;
 const REFRESH_SECRET_KEY = CONSTANTS.JWT_REFRESH_SECRET_KEY;
-const ACCESS_TOKEN_EXPIRY = '24h'; // 1 hour
-const REFRESH_TOKEN_EXPIRY = '7d'; // 7 days
+const ACCESS_TOKEN_EXPIRY = '30d'; // 1 hour
+const REFRESH_TOKEN_EXPIRY = '365d'; // 7 days
 
 export function generateAccessToken(user) {
   return jwt.sign({ userId: user.userid, email: user.email }, SECRET_KEY, {
@@ -37,6 +38,7 @@ export async function generateRefreshToken(user, prevToken) {
     userId: user.userid,
     enabled: true,
     refreshToken: hashToken(refreshToken),
+    expires: moment().add(REFRESH_TOKEN_EXPIRY, 'days').toDate(),
   });
   if (prevToken) {
     await dbManager.getModels().RefreshTokens.destroy({

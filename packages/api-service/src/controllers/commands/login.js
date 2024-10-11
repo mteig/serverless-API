@@ -13,25 +13,46 @@ export default async function login(event, context) {
   const { email, password } = queryStringParameters;
   const result = { success: false, statusCode: 400 };
   if (!email || !password) {
-    result.message = 'Email and password are required';
+    result.message = 'bad parameters';
     return result;
   }
   const userRepo = new RepositoryFactory().getUserRepo();
   const user = await userRepo.getUser(email);
   if (!user) {
-    result.message = 'User not found';
+    result.message = 'email';
     return result;
   }
   const hashedPassword = getMD5Hash(password);
   if (user.password !== hashedPassword) {
-    result.message = 'Invalid password';
+    result.message = 'password';
     return result;
   }
+  const {
+    longitude,
+    latitude,
+    device_token: deviceToken,
+    tag,
+  } = queryStringParameters;
+  if (longitude && latitude) {
+    user.longitude = longitude;
+    user.latitude = latitude;
+    user.lat = latitude;
+    user.lng = longitude;
+  }
+  if (deviceToken) {
+    user.device_token = deviceToken;
+  }
+  if (tag) {
+    user.tag = tag;
+  }
+  await user.save();
+
   result.accessToken = generateAccessToken(user);
   result.refreshToken = await generateRefreshToken(user);
   result.id = user.userid;
   result.statusCode = 200;
   result.success = true;
+  result.refresh_location = true;
   result.message = 'Login successful';
   return result;
 }

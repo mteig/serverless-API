@@ -26,9 +26,11 @@ provider:
     DB_SETTINGS_NAME: ${self:custom.app.${self:provider.stage}.db.settings}
     STAGE: ${opt:stage, 'local'}
     NODE_ENV: production
+    REGION: ${self:provider.region}
     ASSETS_BUCKET_NAME: ${self:custom.app.${self:provider.stage}.assets.bucket}
     JWT_SECRET_KEY: ${self:custom.app.${self:provider.stage}.tokenConfig.accessTokenSecret}
     JWT_REFRESH_SECRET_KEY: ${self:custom.app.${self:provider.stage}.tokenConfig.refreshTokenSecret}
+    EMAIL_FROM_ADDRESS: ${self:custom.app.${self:provider.stage}.emailConfig.fromAddress}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -53,6 +55,11 @@ provider:
       Resource:
         - arn:aws:secretsmanager:${self:provider.region}:${aws:accountId}:secret:${self:custom.app.${self:provider.stage}.db.credentials}-*
         - arn:aws:secretsmanager:${self:provider.region}:${aws:accountId}:secret:${self:custom.app.${self:provider.stage}.db.settings}-*
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: "*"
     - Effect: Allow
       Action:
         - rds-db:connect

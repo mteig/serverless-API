@@ -13,7 +13,9 @@ class UserRepo {
 
   async updateUser(user) {
     await dbReady;
-    return dbManager.getModels().Users.update(user, { where: { id: user.id } });
+    return dbManager
+      .getModels()
+      .Users.update(user, { where: { userid: user.userid } });
   }
 }
 

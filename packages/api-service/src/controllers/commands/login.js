@@ -7,9 +7,11 @@ import {
   generateRefreshToken,
 } from 'app-tools';
 
+const COMMAND_NAME = 'Login';
+
 export default async function login(event, context) {
   const { queryStringParameters } = processEvent(event);
-  log.info({ queryStringParameters }, 'command::params::login');
+  log.info({ queryStringParameters }, `command::params::${COMMAND_NAME}`);
   const { email, password } = queryStringParameters;
   const result = { success: false, statusCode: 400 };
   if (!email || !password) {

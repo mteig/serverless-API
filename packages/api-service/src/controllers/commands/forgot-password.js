@@ -7,9 +7,11 @@ import {
   ServiceFactory,
 } from 'app-tools';
 
+const COMMAND_NAME = 'ForgotPassword';
+
 export default async function forgotPassword(event, context) {
   const { queryStringParameters } = processEvent(event);
-  log.info({ queryStringParameters }, 'command::params::ForgotPassword');
+  log.info({ queryStringParameters }, `command::params::${COMMAND_NAME}`);
   const { email, language } = queryStringParameters;
   const result = { success: false, statusCode: 400 };
   if (!email) {
@@ -46,7 +48,7 @@ export default async function forgotPassword(event, context) {
     result.success = true;
     result.statusCode = 200;
     result.message = 'Email sent';
-    result.id = user.id;
+    result.id = user.userid;
     result.refresh_location = true;
     await user.save();
   }

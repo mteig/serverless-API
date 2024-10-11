@@ -4,10 +4,24 @@ import {
   processEvent,
   createResponse,
   verifyAccessToken,
+  RepositoryFactory,
 } from 'app-tools';
 import login from './commands/login.js';
 import refreshToken from './commands/refresh-token.js';
 import forgotPassword from './commands/forgot-password.js';
+import updateLocation from './commands/update-location.js';
+import logout from './commands/logout.js';
+
+const authenticatedRoutes = {
+  UpdateLocation: updateLocation,
+};
+
+const unauthenticatedRoutes = {
+  Login: login,
+  RefreshToken: refreshToken,
+  ForgotPassword: forgotPassword,
+  Logout: logout,
+};
 
 const innerHandler = async (event, context) => {
   const { queryStringParameters, headers } = processEvent(event);
@@ -17,9 +31,8 @@ const innerHandler = async (event, context) => {
     result.message = 'Command is required';
     return createResponse(result);
   }
-  const unauthRoutes = ['Login', 'RefreshToken', 'ForgotPassword'];
-  if (!unauthRoutes.includes(command)) {
-    log.info({ headers }, 'command::headers::tiger-servlet');
+  let user;
+  if (authenticatedRoutes[command]) {
     if (!headers.Authorization) {
       result.message = 'Authorization header is required';
       result.statusCode = 401;
@@ -33,25 +46,18 @@ const innerHandler = async (event, context) => {
       return createResponse(result);
     }
   }
+  if (userid) {
+    const userRepo = new RepositoryFactory().getUserRepo();
+    user = await userRepo.getUserById(userid);
+  }
   try {
-    switch (command) {
-      case 'Login': {
-        result = await login(event, context);
-        break;
-      }
-      case 'RefreshToken': {
-        result = await refreshToken(event, context);
-        break;
-      }
-      case 'ForgotPassword': {
-        result = await forgotPassword(event, context);
-        break;
-      }
-      default: {
-        result.message = 'Invalid command';
-        log.error({ command, queryStringParameters }, 'Invalid command');
-        break;
-      }
+    if (authenticatedRoutes[command]) {
+      result = await authenticatedRoutes[command](event, context, user);
+    } else if (unauthenticatedRoutes[command]) {
+      result = await unauthenticatedRoutes[command](event, context);
+    } else {
+      result.message = 'Invalid command';
+      log.error({ command, queryStringParameters }, 'Invalid command');
     }
   } catch (error) {
     log.error(

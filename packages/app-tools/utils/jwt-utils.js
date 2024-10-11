@@ -58,7 +58,7 @@ export function verifyAccessToken(token, tokenUserId) {
   return false;
 }
 
-function hashToken(token) {
+export function hashToken(token) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 

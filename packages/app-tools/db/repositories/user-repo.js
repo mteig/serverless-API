@@ -17,6 +17,11 @@ class UserRepo {
       .getModels()
       .Users.update(user, { where: { userid: user.userid } });
   }
+
+  async createUser(user) {
+    await dbReady;
+    return dbManager.getModels().Users.create(user);
+  }
 }
 
 export default UserRepo;

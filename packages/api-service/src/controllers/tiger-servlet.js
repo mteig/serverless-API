@@ -11,6 +11,7 @@ import refreshToken from './commands/refresh-token.js';
 import forgotPassword from './commands/forgot-password.js';
 import updateLocation from './commands/update-location.js';
 import logout from './commands/logout.js';
+import register from './commands/register.js';
 
 const authenticatedRoutes = {
   UpdateLocation: updateLocation,
@@ -21,6 +22,7 @@ const unauthenticatedRoutes = {
   RefreshToken: refreshToken,
   ForgotPassword: forgotPassword,
   Logout: logout,
+  Register: register,
 };
 
 const innerHandler = async (event, context) => {

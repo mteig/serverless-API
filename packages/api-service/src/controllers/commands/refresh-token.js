@@ -30,6 +30,8 @@ export default async function refreshToken(event, context) {
     result.refreshToken = await generateRefreshToken(user, token);
     result.success = true;
     result.statusCode = 200;
+    result.id = user.userid;
+    result.refresh_location = true;
   } catch (error) {
     log.error(error);
     result.message = error.message || 'Internal server error';

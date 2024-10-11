@@ -14,7 +14,7 @@ export async function createResponse(promise, statusCode) {
       result.idInt = result.id;
       result.idStr = result.id.toString();
     }
-    result.refresh_Location = result.refresh_Location ? '1' : '0';
+    result.refresh_location = result.refresh_location ? '1' : '0';
     return {
       statusCode: statusCode || result.statusCode || 200,
       body: JSON.stringify(result || {}),

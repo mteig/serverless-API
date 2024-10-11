@@ -12,9 +12,15 @@ import forgotPassword from './commands/forgot-password.js';
 import updateLocation from './commands/update-location.js';
 import logout from './commands/logout.js';
 import register from './commands/register.js';
+import updateAccount from './commands/update-account.js';
+import updatePassword from './commands/update-password.js';
+import createPin from './commands/create-pin.js';
 
 const authenticatedRoutes = {
   UpdateLocation: updateLocation,
+  UpdateAccount: updateAccount,
+  UpdatePassword: updatePassword,
+  CreatePin: createPin,
 };
 
 const unauthenticatedRoutes = {
